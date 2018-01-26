@@ -11,7 +11,7 @@ end
 puts 'I am a fortune teller. Tell me your name: '
 name = gets.chomp
 
-if name == 'Dan'
+if name == 'Dan'  || name == 'Pippin'
  
   puts 'I see great things in your future.'
 
