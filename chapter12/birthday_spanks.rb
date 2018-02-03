@@ -1,4 +1,4 @@
-def get_birth_year
+git def get_birth_year
   while true  
     puts "What year were you born in?"
     birth_year = gets.chomp
