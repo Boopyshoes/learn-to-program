@@ -1,42 +1,43 @@
 def roman_to_int (roman_numeral)
   roman_int = 0  # default to 0
+  roman_numeral_upper = roman_numeral.upcase
   if valid_roman(roman_numeral) 
     i = 0
-    while i < (roman_numeral.length - 1)
-      if roman_numeral[i].upcase == 'M'
+    while i <= (roman_numeral_upper.length - 1)
+      if roman_numeral_upper[i] == 'M'
         roman_int = roman_int + 1000
-      elsif roman_numeral[i].upcase == 'D'
+      elsif roman_numeral_upper[i] == 'D'
         roman_int = roman_int + 500
-      elsif roman_numeral[i].upcase == 'L'
+      elsif roman_numeral_upper[i] == 'L'
         roman_int = roman_int + 50
-      elsif roman_numeral[i].upcase == 'V'
+      elsif roman_numeral_upper[i] == 'V'
         roman_int = roman_int + 5
-      elsif roman_numeral[i].upcase == 'C'
-        if roman_numeral[i + 1].upcase == 'M'
+      elsif roman_numeral_upper[i] == 'C'
+        if roman_numeral_upper[i + 1] == 'M'
           roman_int = roman_int + 900
           i = i + 1 
-        elsif roman_numeral[i + 1].upcase == 'D'
+        elsif roman_numeral_upper[i + 1] == 'D'
           roman_int = roman_int + 400
           i = i + 1
         else
           roman_int = roman_int + 100
         end
-      elsif roman_numeral[i].upcase == 'X'
-        if roman_numeral[i + 1].upcase == 'C'
+      elsif roman_numeral_upper[i] == 'X'
+        if roman_numeral_upper[i + 1] == 'C'
           roman_int = roman_int + 90
           i = i + 1
-        elsif roman_numeral[i + 1].upcase == 'L'
+        elsif roman_numeral_upper[i + 1] == 'L'
           roman_int = roman_int + 40
           i = i + 1
         else
           roman_int = roman_int + 10
         end
-      elsif roman_numeral[i].upcase == 'I'
-        if roman_numeral[i + 1] == 'X'
+      elsif roman_numeral_upper[i] == 'I'
+        if roman_numeral_upper[i + 1] == 'X'
           # if this is IX, add 9 and increment i to skip a char
           roman_int = roman_int + 9
           i = i + 1
-        elsif roman_numeral[i + 1] == 'V'
+        elsif roman_numeral_upper[i + 1] == 'V'
           # if this is IV, add 4 and increment i to skip a char
           roman_int = roman_int + 4
           i = i + 1
@@ -47,8 +48,6 @@ def roman_to_int (roman_numeral)
       end
       i = i + 1
     end
-  else
-    # not a valid roman_int, leave the default value in roman_int
   end
   
   roman_int
@@ -106,10 +105,17 @@ def int_to_roman (user_int) # converts any number between 1 and 3000 to roman nu
 end
 
 def valid_roman (roman_numeral)
-  not_roman_regex = /[^MmDdCcLlXxVvIi]/
-  roman_regex = /[Mm]{0,3}(([Cc]([Mm]|[Dd]))|([Dd])?[Cc]{0,3})(([Xx]([Cc]|[Ll]))|([Ll])?[Xx]{0,3})(([Ii]([Xx])|[Vv])|([Vv])?[Ii]{0,3})/
-  # if we get a match, this contains invalid characters
-  if !not_roman_regex.match(roman_numeral)
+  # Validates roman_numeral is a properly formed 
+  # roman numeral between I and MMMCMXCIX (1 and 3999)
+  invalid_chars = /[^MDCLXVI]/i
+  roman_regex_str = "[M]{0,3}" +                        # Thousands
+                    "(([C]([M]|[D]))|([D])?[C]{0,3})" + # Hundreds
+                    "(([X]([C]|[L]))|([L])?[X]{0,3})" + # Tens
+                    "(([I]([X]|[V]))|([V])?[I]{0,3})"   # Ones
+   roman_regex = Regexp.new(roman_regex_str, Regexp::IGNORECASE)
+
+  # check for all valid characters
+  if !invalid_chars.match(roman_numeral)
     # next check if it's a validly formed roman numeral
     roman_regex.match(roman_numeral).to_s == roman_numeral
   end
@@ -122,7 +128,7 @@ end
 
 def get_int
   while true
-    puts 'Enter an integer between 1 and 3999 and I will convert it to a roman numeral.'
+    puts 'Please enter an integer between 1 and 3999.'
     number = gets.chomp
     if valid_int(number.to_i)
       break
@@ -135,12 +141,12 @@ end
 
 def get_roman
   while true
-    puts 'Enter a roman numeral between I and MMMCMXCIX and I will convert it to an integer.'
+    puts 'Please enter a roman numeral between I and MMMCMXCIX'
     roman_numeral = gets.chomp
     if valid_roman(roman_numeral)
       break
     else
-      puts "#{roman_numeral} is not a vald roman numeral."
+      puts "#{roman_numeral} is not a valid roman numeral."
     end
   end
   roman_numeral
