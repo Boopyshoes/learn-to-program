@@ -7,9 +7,9 @@
 # Birthday they want to know about
 def get_birthday_name
   # Regex to ensure names include one or more words (hyphens inclusive)
-  # separated by a single whitespace each
+  # separated by a single whitespace character each
   name_regex = /([\w]+[-]?[\w]+[\s{1}])*[\w]+[-]?[\w]/i 
-  puts "I can help you figure out the someone's next birthday."
+  puts "I can help you figure out someone's next birthday."
   puts "Well, that is if I know them..."
   
   # ask until the name meets our format. 
@@ -77,7 +77,7 @@ def find_next_birthday(month, day)
       # Birthday is next year
       birthday_year = Time.now.year + 1
     end
-    birthday = Time.new(birthday_year, month, day)
+    Time.new(birthday_year, month, day)
   else
     nil
   end
@@ -111,7 +111,6 @@ if birthday == ''
 end
 
 month_int = month_to_int(birthday[0..2])
-puts month_int
 # exit the program if we don't get a good result converting the month
 if month_int == 0
   exit_with_message("An unexpected error has occurred. #{birthday[0..2]} is\n"+
@@ -124,9 +123,6 @@ birthday = birthday.gsub(/[,]/,"")
 # puts birthday # Here for debugging
 year = birthday[-4..-1].to_i
 date = birthday[3..-5].to_i  # we have MMMD(D),YYYY. 3..-6 will return a 1 or 2 digit date
-
-puts year
-puts date
 
 next_birthday = find_next_birthday(month_int, date)
 if next_birthday == nil

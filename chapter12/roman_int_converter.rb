@@ -152,12 +152,12 @@ def get_roman
   roman_numeral
 end
 
-puts 'Welcome to the Roman/Arabic number converter.'
+puts 'Welcome to the Roman/Integer number converter.'
 puts
 while true
   puts 'Do you want to:'  
-  puts '    1 - Convert Roman to Arabic'
-  puts '    2 - Convert Arabic to Roman'
+  puts '    1 - Convert Roman to Integer'
+  puts '    2 - Convert Integer to Roman'
   puts
   print 'Make your selection [1/2]: '
   selection = gets.chomp
